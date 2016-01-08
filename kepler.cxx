@@ -30,12 +30,14 @@ void init(star* b, double& H){
  
  for (double t=dt; t<=T; t+=dt){
    
+   double qsum=pow((b.q[0] * b.q[0] + b.q[1] * b.q[1]),-3./2.);
+   
  for(int i=0; i<2; i++){
-   b.p[i] -= dt* b.q[i]*pow((b.q[0] * b.q[0] + b.q[1] * b.q[1]),-3./2.);
+   b.p[i] -= dt* b.q[i] * qsum;
    b.q[i] += dt* b.p[i];
  }
  
- H = (1/2)*(b.p[0] * b.p[0] + b.p[1] * b.p[1]) - 1/sqrt((b.q[0] * b.q[0] + b.q[1] * b.q[1]));
+ H = (1./2.)*(b.p[0] * b.p[0] + b.p[1] * b.p[1]) - 1/sqrt((b.q[0] * b.q[0] + b.q[1] * b.q[1]));
  cout << t << "\t" << H << "\t" << b.q[0] << "\t" << b.q[1] << "\t" << b.p[0] << "\t" << b.p[1] << endl;
  }
    return 0;
